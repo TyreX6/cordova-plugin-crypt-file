@@ -31,7 +31,7 @@ module.exports = function(context) {
         var wwwDir = platformInfo.locations.www;
 
         findCryptFiles(wwwDir).filter(function(file) {
-            return fs.statSync(file).isFile() && isCryptFile(file.replace(wwwDir, ''));
+            return isCryptFile(file.replace(wwwDir, ''));
         }).forEach(function(file) {
             var content = fs.readFileSync(file, 'utf-8');
             fs.writeFileSync(file, encryptData(content, key, iv), 'utf-8');
@@ -62,7 +62,7 @@ module.exports = function(context) {
             cfg.doc.getroot().getchildren().filter(function(child, idx, arr) {
                 return (child.tag == 'content');
             }).forEach(function(child) {
-                child.attrib.src = '/+++/' + child.attrib.src;
+                child.attrib.src = '/www/' + child.attrib.src;
             });
 
             cfg.write();
